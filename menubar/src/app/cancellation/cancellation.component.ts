@@ -38,19 +38,19 @@ export class CancellationComponent implements OnInit {
     this.customerNameService
       .getCustomerNames(this.zipCode, this.lastName)
       .subscribe(data => {
-
         if (data) {
           this.customerNames = data;
-          console.log(this.customerNames);
+        }
+
+        if (this.api) {
+          console.log("inside if this.api");
+          this.api.forEachNode((node) => {
+            if (node) {
+              console.log(node);
+            }
+          });
         }
       });
-
-    if (this.api) {
-      console.log("inside if this.api");
-      this.api.forEachNode((node) => {
-        console.log("node" + node);
-      });
-    }
   }
 
   // this.api.forEachNode((node) => {
@@ -100,12 +100,12 @@ export class CancellationComponent implements OnInit {
   }
 
   printNode(node, index) {
-    console.log('Customer Number is: ' + node.data.CustomerNumber);
-    console.log('Cancel is: ' + node.data.IsCancel);
-    console.log('params value is: ', this.params.value)
-    if (node.data.IsCancel.checked) {
-      console.log('Customer Number in checked is: ' + node.data.CustomerNumber);
-    }
+    // console.log('Customer Number is: ' + node.data.CustomerNumber);
+    // console.log('Cancel is: ' + node.data.IsCancel);
+    // console.log('params value is: ', this.params.value)
+    // if (node.data.IsCancel.checked) {
+    //   console.log('Customer Number in checked is: ' + node.data.CustomerNumber);
+    // }
   }
 
   public checkedVal() {
