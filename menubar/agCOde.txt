@@ -1,0 +1,74 @@
+import { Component, AfterViewInit } from '@angular/core';
+import { CustomerNameService } from '../customer-name.service';
+import { CustomerName } from '../customer-name';
+import { ColDef, GridApi, ColumnApi } from 'ag-grid-community';
+import { ZipcodeService } from '../zipcode.service';
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-names',
+  templateUrl: './names.component.html',
+  styleUrls: ['./names.component.css']
+})
+export class NamesComponent implements AfterViewInit {
+  zipCodeControl = new FormControl();
+  zipCodes: Array<string>
+  customerNames: Array<CustomerName>
+  private columnDefs: ColDef[];
+
+  private api: GridApi;
+  private columnApi: ColumnApi;
+
+  constructor(private customerNameService: CustomerNameService,
+    private zipCodeService: ZipcodeService) { 
+    this.columnDefs= this.createColumnDefs();
+  }
+
+  ngAfterViewInit() {
+    this.zipCodeService
+        .getZipCodes()
+        .subscribe(data => {this.zipCodes = data;});
+
+    this.customerNameService
+        .getCustomerNames()
+        .subscribe(data => {this.customerNames = data;});
+  }
+
+  onGridReady(params): void {
+    this.api = params.api;
+    this.columnApi = params.columnApi;
+    this.api.sizeColumnsToFit();
+  }
+
+  saveCustomer() {
+    this.api.forEachNode(this.printNode);
+  }
+
+  printNode(node, index) {
+      console.log('Customer Number is: ' + node.data.CustomerNumber);
+  }
+
+  private createColumnDefs() {
+    return [
+      {field: 'Id', sortable: true},
+      {header: 'Customer Number', field: 'CustomerNumber', sortable: true, filter: true, 
+                editable: true},
+      {header: 'First Name', field: 'FirstName', sortable: true, filter: true},
+      {header: 'Middle Name', field: 'MiddleName', sortable: true, filter: true},
+      {header: 'Last Name', field: 'LastName', sortable: true, filter: true},
+      {header: 'DNP', 
+        field: 'IsDNP', 
+        cellRenderer: params => {
+          return `<input type='checkbox' ${params.value ? 'checked': ''}/>`
+        }  
+      },
+      {header: 'Active', 
+        field: 'IsActive', 
+        cellRenderer: params => {
+          return `<input type='checkbox' ${params.value ? 'checked': ''}/>`
+        }  
+      }
+    ]
+  }
+
+}

@@ -1,0 +1,12 @@
+<form class="body">
+  <mat-form-field>
+    <textarea [(ngModel)]="zipCodeVal" matInput placeholder="ZipCode" name="zipCode"></textarea>
+  </mat-form-field>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <mat-form-field>
+    <textarea [(ngModel)]="lastNameVal" matInput placeholder="LastName" name="lastName"></textarea>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
+</form>
+<app-cancellation [zipCode]="zipCodeVal" [lastName]="lastNameVal" *ngIf="loadCancellation"></app-cancellation>

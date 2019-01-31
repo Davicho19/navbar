@@ -1,0 +1,11 @@
+<div *ngIf="loadCancellation">
+  <ag-grid-angular class="ag-fresh"
+    [columnDefs]="columnDefs"
+    [rowData]="customerNames"
+    (gridReady)="onGridReady($event)"
+    class="ag-theme-balham"
+    rowSelection="multiple">
+  </ag-grid-angular>
+  <br/>
+  <button mat-raised-button color="primary" (click)="saveCustomer()">Save</button>
+</div>
