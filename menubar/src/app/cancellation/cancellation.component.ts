@@ -32,18 +32,14 @@ export class CancellationComponent implements OnInit {
   }
 
   onGridReady(params) : void {
-    // this.api = params.api;
-    // this.columnApi = params.columnApi;
-    // this.api.sizeColumnsToFit();
+    this.api = params.api;
+    this.columnApi = params.columnApi;
+    this.api.sizeColumnsToFit();
 
-    params.api.forEachNode(function(rowNode, index)  {
-      console.log("inside if this.api" + rowNode);
-    });
-    
     if (this.api) {
       console.log("inside if this.api");
-      this.api.forEachNode((rowNode) => {
-          console.log("rowNode" + rowNode);
+      this.api.forEachNode((node) => {
+          console.log("node" + node);
       });
     }
   }
